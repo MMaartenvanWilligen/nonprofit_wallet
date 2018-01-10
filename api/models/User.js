@@ -1,10 +1,12 @@
 module.exports = {
     attributes: {
         // e.g., "User"
+
+        schema: true,
+
         name: {
             type: 'string',
             required: true
-
         },
 
         email: {

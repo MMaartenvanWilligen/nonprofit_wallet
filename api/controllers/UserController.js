@@ -1,18 +1,29 @@
 module.exports = {
     login: function (req, res) {
+        console.log("login");
         console.log(req.User);
-        res.view("user/login");
+        res.view();
     },
 
-    signup: function (req, res) {
-        console.log(req.User);
-        res.view("user/login");
-    },
+    signup: function (req, res, next) {
 
-    logout: function (req, res) {
-        console.log(req.User);
-        res.view("user/login");
+
+        User.create(req.params.all(), function userCreated(err, user) {
+
+
+            if (err && err.invalidAttributes) {
+
+                /*// store errors in session
+                req.session.flash = {
+                    formErrors: err
+                };*/
+
+                return res.view('user/signup', {formErrors: err});
+            } else {
+                return res.view('/login');
+            }
+
+        });
     }
-
 
 };

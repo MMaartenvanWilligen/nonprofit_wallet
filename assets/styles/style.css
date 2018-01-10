@@ -48,6 +48,6 @@
     transform: translate(-50%, -50%);
 }
 
-#form-login {
+#form-login, #form-signup{
     width: 100%;
 }

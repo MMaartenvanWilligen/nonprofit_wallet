@@ -32,18 +32,24 @@ module.exports.routes = {
      *                                                                          *
      ***************************************************************************/
 
-    '/': { view: 'homepage' },
-    'get /signup': { view: 'login' }
+    '/': {view: 'homepage'},
+    '/home': {view: 'homepage'},
+    'get /login': {view: 'user/login'},
+    'get /signup': {view: 'user/signup'},
+    'get /logout': { view: 'user/logout'},
+    'post /login': 'UserController.login',
+    'post /signup': 'UserController.signup',
+    '/logout': 'UserController.logout'
 
 
-    /***************************************************************************
-     *                                                                          *
-     * Custom routes here...                                                    *
-     *                                                                          *
-     * If a request to a URL doesn't match any of the custom routes above, it   *
-     * is matched against Sails route blueprints. See `config/blueprints.js`    *
-     * for configuration options and examples.                                  *
-     *                                                                          *
-     ***************************************************************************/
+        /***************************************************************************
+         *                                                                          *
+         * Custom routes here...                                                    *
+         *                                                                          *
+         * If a request to a URL doesn't match any of the custom routes above, it   *
+         * is matched against Sails route blueprints. See `config/blueprints.js`    *
+         * for configuration options and examples.                                  *
+         *                                                                          *
+         ***************************************************************************/
 
-};
+    };

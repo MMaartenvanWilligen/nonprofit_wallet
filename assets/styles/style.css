@@ -28,7 +28,7 @@
 }
 
 .card-gradient-top {
-    height: 200px;
+    height: 150px;
     width: auto;
 }
 
@@ -40,6 +40,10 @@
     padding: 0px !important;
 }
 
+.container {
+    margin-top: 40px;
+}
+
 .centered {
     position: fixed;
     top: 50%;
@@ -48,6 +52,12 @@
     transform: translate(-50%, -50%);
 }
 
+#signup-card {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 #form-login, #form-signup{
-    width: 100%;
+
+    margin-top: 20px;
 }

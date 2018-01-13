@@ -1,25 +1,42 @@
+var bcrypt = require('bcrypt');
+
 module.exports = {
+    connection: 'localServerSql',
+    tableName: 'user',
+    schema: true,
+
     attributes: {
         // e.g., "User"
 
-        schema: true,
-
+        id: {
+            type: 'integer',
+            unique: true,
+            primaryKey: true,
+            columnName: 'id'
+        },
         name: {
             type: 'string',
-            required: true
+            required: true,
+            columnName: 'name'
         },
 
         email: {
             type: 'email',
             required: true,
-            unique: true
+            unique: true,
+            columnName: 'email'
         },
 
         password: {
             required: true,
-            type: "string"
-        }
+            type: "string",
+            columnName: 'password'
+        },
 
+        role: {
+            type: "string",
+            columnName: 'role'
+        }
     },
 
     validationMessages: {
@@ -39,6 +56,18 @@ module.exports = {
             type: "must be a string"
         }
 
+    },
+
+    beforeCreate: function (values, cb) {
+
+        sails.log("before create");
+
+        bcrypt.hash(values.password, 10, function(err, hash) {
+            if(err) return cb(err);
+            values.password = hash;
+            //calling cb() with an argument returns an error. Useful for canceling the entire operation if some criteria fails.
+            cb();
+        });
     }
 };
 

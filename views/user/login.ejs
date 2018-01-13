@@ -17,19 +17,25 @@
 
             <!--Card content-->
             <div class="card-body">
+                <% if (typeof formError !== 'undefined') { %>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-warning"><%= formError%></li>
+                </ul>
+
+                <% } %>
 
                 <!--Text-->
-                <form action="user/post" method="post">
+                <form action="/user/loginPost" method="post">
 
                     <div class="md-form">
                         <i class="far fa-envelope prefix grey-text"></i>
-                        <input type="text" id="defaultForm-email" class="form-control">
+                        <input type="text" id="defaultForm-email" class="form-control" name="email">
                         <label for="defaultForm-email">Your email</label>
                     </div>
 
                     <div class="md-form">
                         <i class="fa fa-lock prefix grey-text"></i>
-                        <input type="password" id="defaultForm-pass" class="form-control">
+                        <input type="password" id="defaultForm-pass" class="form-control" name="password">
                         <label for="defaultForm-pass">Your password</label>
                     </div>
 
@@ -38,7 +44,7 @@
                     </div>
                 </form>
 
-                <a href="/signup"><p>Sign up</p></a>
+                <a href="/user/signup"><p>Sign up</p></a>
 
             </div>
 

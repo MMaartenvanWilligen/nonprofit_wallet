@@ -1,31 +1,75 @@
+var bcrypt = require('bcrypt');
+
 module.exports = {
     login: function (req, res) {
         console.log("login");
-        console.log(req.User);
         res.view();
     },
 
+    loginPost: function (req, res) {
+        console.log("loginPost");
+
+        if (!req.param("email") || !req.param("password")) {
+            console.log("requires password and email");
+            res.view("user/login", {formError: "email and password are required"})
+        } else {
+
+            console.log("else");
+            User.findOneByEmail(req.param("email")).exec(function (err, user) {
+
+                if (err) {
+
+                    console.log(err);
+                    res.view('user/login', {formError: "Email does not match a account"});
+
+                } else {
+                    console.log("email found");
+                    bcrypt.compare(req.param("password"), user.password, function (err, match) {
+                        // res = false
+                        if (err || !match) {
+
+                            console.log(err);
+                            res.view('user/login', {formError: "password did not match"});
+
+                        } else {
+                            console.log('name is:', user.name);
+                            req.session.authenticated = true;
+                            req.session.User = user;
+                            res.redirect('homepage');
+                        }
+
+                    });
+                }
+            });
+
+        }
+
+    },
+
+
     signup: function (req, res, next) {
 
+        res.view();
+    }
+    ,
 
-        User.create(req.params.all(), function userCreated(err, user) {
+    create: function (req, res, next) {
 
-
+        User.create(req.params.all()).exec(function (err, user) {
             if (err && err.invalidAttributes) {
-
-                /*// store errors in session
-                req.session.flash = {
-                    formErrors: err
-                };*/
 
                 console.log(err.Errors);
 
                 return res.view('user/signup', {formError: err.Errors});
-            } else {
-                return res.view('/login');
-            }
 
+            } else {
+                console.log('name is:', user.name);
+                return res.view('user/login', {succesSignup: "the Sign Up was successful"});
+            }
         });
+
     }
 
-};
+
+}
+;

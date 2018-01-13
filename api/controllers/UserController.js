@@ -48,10 +48,8 @@ module.exports = {
 
 
     signup: function (req, res, next) {
-
         res.view();
-    }
-    ,
+    },
 
     create: function (req, res, next) {
 
@@ -67,6 +65,19 @@ module.exports = {
                 return res.view('user/login', {succesSignup: "the Sign Up was successful"});
             }
         });
+
+    },
+
+    logout: function (req, res, next) {
+
+        // "Forget" the user from the session.
+        // Subsequent requests from this user agent will NOT have `req.session.me`.
+        req.session.me = null;
+
+
+        // Otherwise if this is an HTML-wanting browser, do a redirect.
+        return res.redirect('homepage');
+
 
     }
 

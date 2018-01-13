@@ -18,7 +18,9 @@ module.exports = {
                     formErrors: err
                 };*/
 
-                return res.view('user/signup', {formErrors: err});
+                console.log(err.Errors);
+
+                return res.view('user/signup', {formError: err.Errors});
             } else {
                 return res.view('/login');
             }

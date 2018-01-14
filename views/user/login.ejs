@@ -19,9 +19,14 @@
             <div class="card-body">
                 <% if (typeof formError !== 'undefined') { %>
                 <ul class="list-group">
-                    <li class="list-group-item list-group-item-warning"><%= formError%></li>
+                    <li class="list-group-item list-group-item-warning"><%= formError %></li>
                 </ul>
 
+                <% } %>
+                <% if (typeof logoutSuccess !== 'undefined') { %>
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-success"><%= logoutSuccess %></li>
+                </ul>
                 <% } %>
 
                 <!--Text-->

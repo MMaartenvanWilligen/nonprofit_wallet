@@ -30,13 +30,10 @@ module.exports.policies = {
 
     userController: {
         // Apply 'isLoggedIn' by default to all actions that are NOT specified below
-        '*': 'isUser',
+        '*': 'isGuest'
         // If an action is explicitly listed, its policy list will override the default list.
         // So, we have to list 'isLoggedIn' again for the 'edit' action if we want it to be applied.
-        login: ['isGuest'],
-        signup: ['isGuest'],
-        loginPost: ['isGuest'],
-        create: ['isGuest']
+
     }
 
 

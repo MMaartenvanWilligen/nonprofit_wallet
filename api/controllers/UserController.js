@@ -72,12 +72,12 @@ module.exports = {
 
         // "Forget" the user from the session.
         // Subsequent requests from this user agent will NOT have `req.session.me`.
-        req.session.me = null;
+        req.session.authenticated = null;
+        req.session.User = null;
 
 
         // Otherwise if this is an HTML-wanting browser, do a redirect.
-        return res.redirect('homepage');
-
+        return res.redirect('user/login');
 
     }
 

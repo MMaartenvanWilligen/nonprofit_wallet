@@ -8,11 +8,11 @@ module.exports = {
     attributes: {
         // e.g., "User"
 
-        id: {
+        id_user: {
             type: 'integer',
             unique: true,
             primaryKey: true,
-            columnName: 'id'
+            columnName: 'id_user'
         },
         name: {
             type: 'string',
@@ -36,7 +36,20 @@ module.exports = {
         role: {
             type: "string",
             columnName: 'role'
+        },
+
+        // user may have one wallet
+        wallet: {
+            collection:'wallet',
+            via: 'user'
+        },
+
+        // user may have many likes
+        likes: {
+            collection: 'like',
+            via: 'user'
         }
+
     },
 
     validationMessages: {

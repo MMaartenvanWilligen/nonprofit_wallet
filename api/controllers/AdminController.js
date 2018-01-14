@@ -38,6 +38,7 @@ deActivateNonProfit: function (req, res) {
 showUsers: function (req, res) {
     return res.json({
         todo: 'Not implemented yet!'
+
     });
 }
 

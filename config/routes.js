@@ -37,7 +37,8 @@ module.exports.routes = {
     'post /user/login': "userController.loginPost",
     'post /user/signup': "userController.create",
     'get /user/logout': "userController.logout",
-    '/nonProfits': {view: 'nonProfitList'}
+    '/nonProfits': {view: 'nonProfitList'},
+    'get /user/dummydata': 'usertController.dummydata'
 
 
 

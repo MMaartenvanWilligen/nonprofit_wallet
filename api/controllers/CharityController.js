@@ -5,11 +5,57 @@ var bcrypt = require('bcrypt');
 
 module.exports = {
 
-    getAllCharitys: function (req, res) {
-        return res.json({
-            todo: 'Not implemented yet!'
+    overview: function (req, res) {
+        return res.view();
+    },
+
+    show: function (req, res) {
+
+        Charity.find().exec(function (err, records) {
+
+            if (err) {
+                return res.negotiate(err);
+            }
+
+            var charities = records;
+
+            findService.allCategories(function (err, records) {
+                if (err) {
+                    return res.negotiate(err);
+                }
+
+                // It worked!
+                return res.view({categories: records, records: charities})
+            });
+
+        });
+
+    },
+
+    search: function (req, res) {
+        console.log(req.params.all());
+        var options = req.params.all();
+
+
+        findService.searchCharities(options, function (err, records) {
+            if (err) {
+                return res.negotiate(err);
+            }
+            console.log("search done");
+            console.log(records);
+            var charities = records;
+
+            findService.allCategories(function (err, records) {
+                if (err) {
+                    return res.negotiate(err);
+                }
+
+                // It worked!
+                return res.view("charity/show", {categories: records, records: charities})
+            });
         });
     },
+
 
     /**
      * CommentController.destroy()
@@ -23,29 +69,48 @@ module.exports = {
     dummydata: function (req, res, next) {
 
         var dummyData = [
-            {"name": "John", "email": "john@mail.nl", "password": "password", "role": "user"},
-            {"name": "User", "email": "user@mail.nl", "password": "password", "role": "user"},
-            {"name": "Admin", "email": "admin@mail.nl", "password": "password", "role": "admin"},
-            {"name": "Maarten", "email": "maarten@mail.nl", "password": "password", "role": "user"},
-            {"name": "Felipe", "email": "felipe@mail.nl", "password": "password", "role": "user"},
-            {"name": "iris", "email": "iris@mail.nl", "password": "password", "role": "user"}
+            {
+                "name": "Rode kruis",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
+            {
+                "name": "Dierennood",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
+            {
+                "name": "Kika",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
+            {
+                "name": "Ronald Macdonald Fonds",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
+            {
+                "name": "War Child",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
+            {
+                "name": "Amnesty International",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
+            {
+                "name": "Wereld Natuurfonds",
+                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
+            },
         ];
 
 
-        User.create(dummyData).exec(function (err, user) {
+        Charity.create(dummyData).exec(function (err, user) {
             if (err && err.invalidAttributes) {
 
-                console.log(err.Errors);
-
-                return res.ok();
+                return res.redirect("charity/show");
 
             } else {
                 console.log('name is:', user.name);
-                return res.ok();
+                return res.redirect("charity/show");
             }
         });
 
     }
-
 
 };

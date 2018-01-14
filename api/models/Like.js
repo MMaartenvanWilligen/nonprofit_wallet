@@ -10,7 +10,8 @@ module.exports = {
             type: 'integer',
             unique: true,
             primaryKey: true,
-            columnName: 'id_charity'
+            autoIncrement: true,
+            columnName: 'id_like'
         },
 
         //a like may have one user

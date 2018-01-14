@@ -17,11 +17,13 @@ module.exports = {
             type: 'integer',
             unique: true,
             primaryKey: true,
+            autoIncrement: true,
             columnName: 'id_wallet'
         },
 
         name: {
             type: 'string',
+            size: 80,
             required: true,
             columnName: 'name'
         },
@@ -41,10 +43,9 @@ module.exports = {
         // wallet may have many charity's
         charitys: {
             collection: 'charity',
-            via: 'wallet',
+            via: 'wallets',
             dominant: true
         }
-
 
 
     },

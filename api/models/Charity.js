@@ -13,22 +13,24 @@ module.exports = {
             type: 'integer',
             unique: true,
             primaryKey: true,
+            autoIncrement: true,
             columnName: 'id_charity'
         },
 
         name: {
             type: 'string',
+            size: 120,
             required: true,
             columnName: 'name'
         },
 
         description: {
-            type: 'string',
+            type: 'text',
+            size: 300,
             columnName: 'description'
         },
 
         // charity may have one category
-
         category: {
             model:'category'
         },
@@ -36,7 +38,7 @@ module.exports = {
         // charity may have many wallets
         wallets: {
             collection: 'wallet',
-            via: 'charity'
+            via: 'charitys'
         },
 
         // charity may have many likes
@@ -56,7 +58,6 @@ module.exports = {
         description: {
             type: "must be a string"
         }
-
 
     }
 

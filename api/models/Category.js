@@ -10,11 +10,13 @@ module.exports = {
             type: 'integer',
             unique: true,
             primaryKey: true,
+            autoIncrement: true,
             columnName: 'id_category'
         },
 
         category: {
             type: 'string',
+            size: 80,
             required: true,
             columnName: 'category'
         },
@@ -24,7 +26,6 @@ module.exports = {
             collection:'charity',
             via:'category'
         }
-
 
     },
 

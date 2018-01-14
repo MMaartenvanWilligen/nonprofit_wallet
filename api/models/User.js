@@ -12,10 +12,12 @@ module.exports = {
             type: 'integer',
             unique: true,
             primaryKey: true,
+            autoIncrement: true,
             columnName: 'id_user'
         },
         name: {
             type: 'string',
+            size: 80,
             required: true,
             columnName: 'name'
         },
@@ -35,6 +37,7 @@ module.exports = {
 
         role: {
             type: "string",
+            size: 40,
             columnName: 'role'
         },
 

@@ -1,0 +1,67 @@
+/**
+* Created by Gebruiker on 10-1-2018.
+*/
+<div class="container">
+    <!-- Content here -->
+
+    <!--Card-->
+    <div class="row col-12 justify-content-center" id="signup-card">
+
+
+        <!--Card-->
+        <div class="card col-lg-5 col-5 col-sm-8">
+
+            <!--Card image-->
+            <div class="view gradient-scooter card-gradient-top">
+                <div class="mask flex-center">
+                    <h1 class="white-text">Sign up</h1>
+                </div>
+            </div>
+
+            <!--Card content-->
+            <div class="card-body">
+
+                <% if (typeof formError !== 'undefined') { %>
+                <ul class="list-group">
+                    <% _.each(formError, function (error) { %>
+                    <li class="list-group-item list-group-item-warning"><%= error[0].message %></li>
+                    <% }) %>
+                </ul>
+
+                <% } %>
+
+                <!--Text-->
+                <form action="/user/signup" method="post" id="form-signup">
+
+                    <div class="md-form">
+                        <i class="far fa-user prefix grey-text"></i>
+                        <input type="text" id="defaultForm-name" class="form-control" name="name">
+                        <label for="defaultForm-name">Your name</label>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="far fa-envelope prefix grey-text"></i>
+                        <input type="text" id="defaultForm-email" class="form-control" name="email">
+                        <label for="defaultForm-email">Your email</label>
+                    </div>
+
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="defaultForm-pass" class="form-control" name="password">
+                        <label for="defaultForm-pass">Your password</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button class="btn btn-primary" type="submit">Sign up</button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        <!--/.Card-->
+
+
+    </div>
+
+</div>

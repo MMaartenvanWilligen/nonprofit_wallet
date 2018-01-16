@@ -7,23 +7,21 @@ module.exports = {
     },
 
     loginPost: function (req, res) {
-        console.log("loginPost");
-
-        if (!req.param("email") || !req.param("password")) {
-            console.log("requires password and email");
-            res.view("user/login", {formError: "email and password are required"})
-        } else {
+            //validation service to do
 
             console.log("else");
             User.findOneByEmail(req.param("email")).exec(function (err, user) {
 
-                if (err) {
+                //validate undefined null service
 
+                if (err) {
                     console.log(err);
-                    res.view('user/login', {formError: "Email does not match a account"});
+                    return res.negotiate(err);
 
                 } else {
-                    console.log("email found");
+                    console.log("user found");
+                    console.log(user);
+
                     bcrypt.compare(req.param("password"), user.password, function (err, match) {
                         // res = false
                         if (err || !match) {

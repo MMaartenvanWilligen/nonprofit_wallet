@@ -19,7 +19,9 @@
             <div class="card-body">
                 <% if (typeof formError !== 'undefined') { %>
                 <ul class="list-group">
-                    <li class="list-group-item list-group-item-warning"><%= formError %></li>
+                    <% _.each(formError, function (error) { %>
+                    <li class="list-group-item list-group-item-warning"><%= error %></li>
+                    <% }) %>
                 </ul>
 
                 <% } %>

@@ -1,26 +1,19 @@
 /**
  * Created by Gebruiker on 16-1-2018.
  */
+var err = [];
+
 module.exports = {
 
-    inputExists: function (input, msg) {
+    inputExist: function (input, msg) {
 
         if (!input) {
             console.log("required");
             if (msg) {
+                err.push(msg);
                 return msg
             }
             return "is required"
-        }
-    },
-
-    inputUndefined: function (input, msg) {
-
-        if (input === undefined || input === null) {
-            if (msg) {
-                return msg
-            }
-            return "is Undefined or null"
         }
     },
 
@@ -28,6 +21,7 @@ module.exports = {
 
         if (input === "" ) {
             if (msg) {
+                err.push(msg);
                 return msg
             }
             return "is empty string"
@@ -41,6 +35,7 @@ module.exports = {
         var validationEmail = emailRe.test(input);
         if (!validationEmail) {
             if (msg) {
+                err.push(msg);
                 return msg
             }
             return "invalid email"
@@ -55,6 +50,7 @@ module.exports = {
 
         if (!validationPassword) {
             if (msg) {
+                err.push(msg);
                 return msg
             }
             return "Invalid password: must be alphanumeric or @*# , 8 to 15 characters"
@@ -70,10 +66,30 @@ module.exports = {
 
         if (!validationName) {
             if (msg) {
+                err.push(msg);
                 return msg
             }
             return "Invalid name"
+        }
 
+    },
+
+    loginForm: function (email, password, done) {
+        err = [];
+        /*this.inputExist(email, "Email is required");
+        this.inputExist(password, "Password is required");*/
+        this.inputEmptyString(email, "Email is required");
+        this.inputEmptyString(password, "Password is required");
+        this.inputEmailReg(email);
+        this.inputPasswordReg(password);
+
+        console.log("err" + " " + err);
+
+        if (typeof err !== 'undefined' && err.length > 0) {
+            // the array is defined and has at least one element
+            done(err);
+        } else {
+            done();
         }
     }
 

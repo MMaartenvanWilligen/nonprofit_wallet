@@ -7,46 +7,59 @@ module.exports = {
     },
 
     loginPost: function (req, res) {
-            //validation service to do
+        //validation service to do
+        var email = req.param("email");
+        var password = req.param("password");
 
-            console.log("else");
-            User.findOneByEmail(req.param("email")).exec(function (err, user) {
+        validationService.loginForm(email, password, function (err) {
+            console.log(err);
 
-                //validate undefined null service
+            if (typeof err !== 'undefined' && err.length > 0) {
+                return res.view('user/login', {formError: err});
+            }
 
-                if (err) {
-                    console.log(err);
-                    return res.negotiate(err);
+            else {
+                console.log("else");
+                User.findOneByEmail(req.param("email")).exec(function (err, user) {
 
-                } else {
-                    console.log("user found");
-                    console.log(user);
+                    if (user === undefined || user === null) {
+                        return res.view('user/login', {formError: "Email dit not match with registered account"});
+                    }
 
-                    bcrypt.compare(req.param("password"), user.password, function (err, match) {
-                        // res = false
-                        if (err || !match) {
+                    else if (err) {
+                        console.log("else if error");
+                        return res.negotiate(err);
 
-                            console.log(err);
-                            res.view('user/login', {formError: "password did not match"});
+                    } else {
+                        console.log("user found");
+                        console.log(user);
 
-                        } else {
-                            console.log('name is:', user.name);
-                            req.session.authenticated = true;
-                            req.session.User = user;
-                            res.redirect('homepage');
-                        }
+                        bcrypt.compare(req.param("password"), user.password, function (err, match) {
+                            // res = false
+                            if (err || !match) {
 
-                    });
-                }
-            });
+                                console.log(err);
+                                res.view('user/login', {formError: "password did not match"});
 
-        }
+                            } else {
+                                console.log('name is:', user.name);
+                                req.session.authenticated = true;
+                                req.session.User = user;
+                                res.redirect('homepage');
+                            }
+
+                        });
+                    }
+                });
+            }
+
+        });
 
     },
 
 
     signup: function (req, res, next) {
-        res.view();
+        return res.view();
     },
 
     create: function (req, res, next) {
@@ -64,7 +77,8 @@ module.exports = {
             }
         });
 
-    },
+    }
+    ,
 
     logout: function (req, res, next) {
 
@@ -77,7 +91,8 @@ module.exports = {
         // Otherwise if this is an HTML-wanting browser, do a redirect.
         return res.redirect('user/login');
 
-    },
+    }
+    ,
 
     dummydata: function (req, res, next) {
 

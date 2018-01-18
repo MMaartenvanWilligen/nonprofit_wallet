@@ -25,7 +25,8 @@ module.exports = {
         console.log(options.category);
         console.log(options.searchString);
 
-        if (options.category) {
+
+        if (options.category && options.searchString) {
 
             Charity.find({
                 category: options.category,
@@ -43,7 +44,23 @@ module.exports = {
                 }
             });
 
-        } else {
+        }
+
+        else if (options.category) {
+            Charity.find({
+                category: options.category
+            }).exec(function (err, records) {
+                if (err) {
+                    done(err, records)
+                }
+
+                if (records) {
+                    done(err, records);
+                }
+            });
+        }
+
+        else {
 
             Charity.find({
                 or: [
@@ -60,6 +77,37 @@ module.exports = {
                 }
             });
         }
-    }
+    },
+
+    searchCharitiesInWallet: function (options, done) {
+
+        console.log("searchCharities");
+        console.log(options);
+        console.log(options.userId);
+
+
+        Wallet.find({user: options.UserId})
+            .populate("charities")
+            .exec(function (err, users) {
+                // handle error
+
+                // The users object would look something like the following
+                // [{
+                //   id: 123,
+                //   firstName: 'Foo',
+                //   lastName: 'Bar',
+                //   pets: [{
+                //     id: 1,
+                //     breed: 'labrador',
+                //     type: 'dog',
+                //     name: 'fido',
+                //     user: 123
+                //   }]
+                // }]
+            });
+    },
+
+
+
 
 };

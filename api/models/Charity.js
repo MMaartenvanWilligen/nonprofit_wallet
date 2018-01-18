@@ -38,7 +38,7 @@ module.exports = {
         // charity may have many wallets
         wallets: {
             collection: 'wallet',
-            via: 'charitys'
+            via: 'charities'
         },
 
         // charity may have many likes

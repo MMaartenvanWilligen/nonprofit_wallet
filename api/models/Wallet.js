@@ -41,7 +41,7 @@ module.exports = {
         },
 
         // wallet may have many charity's
-        charitys: {
+        charities: {
             collection: 'charity',
             via: 'wallets',
             dominant: true

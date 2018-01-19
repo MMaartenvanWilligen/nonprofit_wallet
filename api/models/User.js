@@ -42,6 +42,7 @@ module.exports = {
         },
 
         // user may have one wallet
+        //collection to query from both sides waller and user and stay sync
         wallet: {
             collection:'wallet',
             via: 'user'
@@ -49,10 +50,10 @@ module.exports = {
 
         // user may have many likes
         likes: {
-            collection: 'like',
-            via: 'user'
+            collection: 'charity',
+            via: 'user',
+            through: 'like'
         }
-
     },
 
     validationMessages: {
@@ -86,30 +87,3 @@ module.exports = {
         });
     }
 };
-
-/*
-module.exports = {
-    connection: 'rustyOldMySQLDatabase',
-    tableName: 'our_users',
-    attributes: {
-        id: {
-            type: 'integer',
-            unique: true,
-            primaryKey: true,
-            columnName: 'the_primary_key'
-        },
-        name: {
-            type: 'string',
-            columnName: 'full_name'
-        },
-        password: {
-            type: 'string',
-            columnName: 'seriously_encrypted_password'
-        },
-        email: {
-            type: 'email',
-            unique: true,
-            columnName: 'email_address'
-        }
-    }
-};*/

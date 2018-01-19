@@ -64,53 +64,7 @@ module.exports = {
         return res.json({
             todo: 'Not implemented yet!'
         });
-    },
-
-    dummydata: function (req, res, next) {
-
-        var dummyData = [
-            {
-                "name": "Rode kruis",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-            {
-                "name": "Dierennood",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-            {
-                "name": "Kika",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-            {
-                "name": "Ronald Macdonald Fonds",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-            {
-                "name": "War Child",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-            {
-                "name": "Amnesty International",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-            {
-                "name": "Wereld Natuurfonds",
-                "description": "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain."
-            },
-        ];
-
-
-        Charity.create(dummyData).exec(function (err, user) {
-            if (err && err.invalidAttributes) {
-
-                return res.redirect("charity/show");
-
-            } else {
-                console.log('name is:', user.name);
-                return res.redirect("charity/show");
-            }
-        });
-
     }
+
 
 };

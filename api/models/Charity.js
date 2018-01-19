@@ -32,7 +32,8 @@ module.exports = {
 
         // charity may have one category
         category: {
-            model:'category'
+            model:'category',
+            required: true
         },
 
         // charity may have many wallets
@@ -43,8 +44,9 @@ module.exports = {
 
         // charity may have many likes
         likes: {
-            collection: 'like',
-            via: 'charity'
+            collection: 'user',
+            via: 'charity',
+            through: 'like'
         }
 
     },
@@ -57,6 +59,10 @@ module.exports = {
 
         description: {
             type: "must be a string"
+        },
+
+        category: {
+            required: 'Name is required'
         }
 
     }

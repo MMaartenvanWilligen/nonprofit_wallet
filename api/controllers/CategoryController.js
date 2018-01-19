@@ -26,43 +26,7 @@ module.exports = {
         return res.json({
             todo: 'Not implemented yet!'
         });
-    },
-
-    dummydata: function (req, res, next) {
-
-        var dummyData = [
-            {
-                "category": "Dieren"
-            },
-            {
-                "category": "Gezondheid"
-            },
-            {
-                "category": "Armoede"
-            },
-            {
-                "category": "Milieu"
-            },
-            {
-                "category": "Mensenrechten"
-            },
-            {
-                "category": "Kinderen"
-            }
-        ];
-
-
-        Category.create(dummyData).exec(function (err, user) {
-            if (err && err.invalidAttributes) {
-
-                return res.redirect("category/show");
-
-            } else {
-                console.log('name is:', user.name);
-                return res.redirect("category/show");
-            }
-        });
-
     }
+
 
 };

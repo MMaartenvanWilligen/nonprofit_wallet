@@ -56,28 +56,37 @@ module.exports = {
 
 
     signup: function (req, res, next) {
+
         return res.view();
     },
 
     create: function (req, res, next) {
 
-        validationService.signupForm(req.param("name"), req.param("email"), req.param("password")).then(function (result) {
-            login();
-        }).catch(function (err) {
-            return res.view('user/signup', {formError: err});
-        });
-
-        User.create(req.params.all()).exec(function (err, user) {
-            if (err && err.invalidAttributes) {
-
-                console.log(err.Errors);
-                return res.view('user/signup', {formError: err.Errors});
+        validationService.signupForm(req.param("name"), req.param("email"), req.param("password"), function (err) {
+            if (err) {
+                console.log("err validation. res");
+                return res.redirect("user/signup");
 
             } else {
-                console.log('name is:', user.name);
-                return res.view('user/login', {succesSignup: "the Sign Up was successful"});
+                console.log("create User");
+                createUser();
             }
         });
+
+        function createUser() {
+
+            User.create(req.params.all()).exec(function (err, user) {
+                if (err && err.invalidAttributes) {
+
+                    console.log(err.Errors);
+                    return res.view('user/signup', {formError: err.Errors});
+
+                } else {
+                    console.log('name is:', user.name);
+                    return res.view('user/login', {succesSignup: "the Sign Up was successful"});
+                }
+            });
+        }
 
     },
 

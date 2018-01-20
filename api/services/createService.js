@@ -6,23 +6,38 @@ var Promise = require("bluebird");
 
 module.exports = {
 
-    addCharityToWallet: function (options) {
+    addCharityToWallet: function (userId, charityId, wallet) {
+        return new Promise(function (resolve, reject) {
 
-        //check if there is a wallet associated with the user. Else create a wallet with the wallet object in options
-        Wallet.findOrCreate({user: optionsUserId}, options.WalletObject).exec(function createFindCB(error, createdOrFoundRecords) {
-            console.log('What\'s cookin\' ' + createdOrFoundRecords.name + '?');
-        });
+            if (!wallet) {
+               var wallet = {name: "My first wallet", public: true};
+            }
+            //check if there is a wallet associated with the user. Else create a wallet with the wallet object in options
+            Wallet.findOrCreate({user: userId}, wallet).exec(function createFindCB(err, wallet) {
+                //When wallet is created or found populate it with the charity
+                if (err) {
+                    return reject(err);
+                } else {
+                    Wallet.findOne(wallet.id_wallet).exec(function (err, wallet) {
+                        if (err) {
+                            return reject(err);
+                        }
 
-        //When wallet is created or found populate it with the charity
-        Wallet.findOne(walletId).exec(function (err, wallet) {
-            if (err) // handle error
+                        // Queue up a new charity to be added and a record to be created in the join table
+                        wallet.charities.add(charityId);
 
-            // Queue up a new pet to be added and a record to be created in the join table
-                wallet.charities.add(charityId);
-
-            // Save the user, creating the new pet and associations in the join table
-            wallet.save(function (err) {
+                        // Save the wallet, creating the new charity and associations in the join table
+                        wallet.save(function (err) {
+                            if (err) {
+                                return reject(err);
+                            }else{
+                                resolve()
+                            }
+                        });
+                    });
+                }
             });
+
         });
 
     },
@@ -90,7 +105,7 @@ module.exports = {
                     // Save the user, creating the new pet and associations in the join table
                     return user.save(function (err) {
                         if (err) {
-                            console.log("error save wallet");
+                            console.log("error save like");
                             // handle error (e.g. `return res.serverError(err);` )
                             return reject(err)
                         }

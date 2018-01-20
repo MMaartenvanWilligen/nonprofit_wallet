@@ -40,7 +40,7 @@ module.exports = {
                             { description: {contains: options.searchString}}
                         ]
                     }]
-                }).exec(function (err, records) {
+                }).populate('likes').exec(function (err, records) {
                     if (err) {
                         reject(err)
                     }
@@ -60,7 +60,7 @@ module.exports = {
                         { name: {contains: options.searchString}},
                         {description: {contains: options.searchString}}
                     ]
-                }).exec(function (err, records) {
+                }).populate("likes").exec(function (err, records) {
                     if (err) {
                         reject(err)
                     }
@@ -75,7 +75,7 @@ module.exports = {
                 console.log("category");
                 Charity.find({
                     category: options.category
-                }).exec(function (err, records) {
+                }).populate("likes").exec(function (err, records) {
                     if (err) {
                         reject(err)
                     }
@@ -112,6 +112,8 @@ module.exports = {
                 });
         });
     }
+
+
 
 
 };

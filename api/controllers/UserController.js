@@ -7,23 +7,33 @@ module.exports = {
     },
 
     loginPost: function (req, res) {
-        console.log("loginPost");
+        //validation service to do
+        var email = req.param("email");
+        var password = req.param("password");
 
-        if (!req.param("email") || !req.param("password")) {
-            console.log("requires password and email");
-            res.view("user/login", {formError: "email and password are required"})
-        } else {
+        validationService.loginForm(email, password, function (err) {
+            if(err){
+                return res.view('user/login', {formError: err});
+            }
+            login();
+        });
 
+        function login() {
             console.log("else");
             User.findOneByEmail(req.param("email")).exec(function (err, user) {
 
-                if (err) {
+                if (user === undefined || user === null) {
+                    return res.view('user/login', {formError: "Email dit not match with registered account"});
+                }
 
-                    console.log(err);
-                    res.view('user/login', {formError: "Email does not match a account"});
+                else if (err) {
+                    console.log("else if error");
+                    return res.negotiate(err);
 
                 } else {
-                    console.log("email found");
+                    console.log("user found");
+                    console.log(user);
+
                     bcrypt.compare(req.param("password"), user.password, function (err, match) {
                         // res = false
                         if (err || !match) {
@@ -41,23 +51,26 @@ module.exports = {
                     });
                 }
             });
-
         }
-
     },
 
 
     signup: function (req, res, next) {
-        res.view();
+        return res.view();
     },
 
     create: function (req, res, next) {
+
+        validationService.signupForm(req.param("name"), req.param("email"), req.param("password")).then(function (result) {
+            login();
+        }).catch(function (err) {
+            return res.view('user/signup', {formError: err});
+        });
 
         User.create(req.params.all()).exec(function (err, user) {
             if (err && err.invalidAttributes) {
 
                 console.log(err.Errors);
-
                 return res.view('user/signup', {formError: err.Errors});
 
             } else {
@@ -78,33 +91,6 @@ module.exports = {
 
         // Otherwise if this is an HTML-wanting browser, do a redirect.
         return res.redirect('user/login');
-
-    },
-
-    dummydata: function (req, res, next) {
-
-        var dummyData = [
-            {"name": "John", "email": "john@mail.nl", "password": "password", "role": "user"},
-            {"name": "User", "email": "user@mail.nl", "password": "password", "role": "user"},
-            {"name": "Admin", "email": "admin@mail.nl", "password": "password", "role": "admin"},
-            {"name": "Maarten", "email": "maarten@mail.nl", "password": "password", "role": "user"},
-            {"name": "Felipe", "email": "felipe@mail.nl", "password": "password", "role": "user"},
-            {"name": "iris", "email": "iris@mail.nl", "password": "password", "role": "user"}
-        ];
-
-
-        User.create(dummyData).exec(function (err, user) {
-            if (err && err.invalidAttributes) {
-
-                console.log(err.Errors);
-
-                return res.ok();
-
-            } else {
-                console.log('name is:', user.name);
-                return res.ok();
-            }
-        });
 
     }
 

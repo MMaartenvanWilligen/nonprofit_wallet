@@ -36,12 +36,8 @@
     color: white;
 }
 
-.card {
-    padding: 0px !important;
-}
-
 .container {
-    margin-top: 40px;
+    margin-top: 75px;
 }
 
 .centered {
@@ -53,6 +49,7 @@
 }
 
 #signup-card {
+    padding: 0px!important;
     margin-top: 50px;
     margin-bottom: 50px;
 }
@@ -60,4 +57,8 @@
 #form-login, #form-signup{
 
     margin-top: 20px;
+}
+
+.charity-records{
+    margin: 10px;
 }

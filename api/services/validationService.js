@@ -1,25 +1,14 @@
 /**
  * Created by Gebruiker on 16-1-2018.
  */
+var Promise = require("bluebird");
 var err = [];
 
 module.exports = {
 
-    inputExist: function (input, msg) {
+     inputEmptyString: function (input, msg) {
 
-        if (!input) {
-            console.log("required");
-            if (msg) {
-                err.push(msg);
-                return msg
-            }
-            return "is required"
-        }
-    },
-
-    inputEmptyString: function (input, msg) {
-
-        if (input === "" ) {
+        if (input === "") {
             if (msg) {
                 err.push(msg);
                 return msg
@@ -43,6 +32,7 @@ module.exports = {
     },
 
     inputPasswordReg: function (input, msg) {
+        console.log("passwordReg");
 
         // must be alphanumeric or @*# , 8 to 15 characters
         var passwordRe = /^([a-zA-Z0-9@*#]{8,15})$/;
@@ -56,6 +46,8 @@ module.exports = {
             return "Invalid password: must be alphanumeric or @*# , 8 to 15 characters"
 
         }
+
+        console.log("passwordRegEnd");
     },
 
     inputNameReg: function (input, msg) {
@@ -69,28 +61,99 @@ module.exports = {
                 err.push(msg);
                 return msg
             }
-            return "Invalid name"
+            return "Invalid name: must be only letters and no special characters"
         }
 
     },
 
-    loginForm: function (email, password, done) {
-        err = [];
-        /*this.inputExist(email, "Email is required");
-        this.inputExist(password, "Password is required");*/
-        this.inputEmptyString(email, "Email is required");
-        this.inputEmptyString(password, "Password is required");
-        this.inputEmailReg(email);
-        this.inputPasswordReg(password);
+    inputSearchReg: function (input, msg) {
 
-        console.log("err" + " " + err);
+        // only letters
+        var searchRe = /^[a-zA-Z]+$/;
+        var searchName = searchRe.test(input);
 
-        if (typeof err !== 'undefined' && err.length > 0) {
-            // the array is defined and has at least one element
-            done(err);
-        } else {
-            done();
+        if (!searchName) {
+            if (msg) {
+                err.push(msg);
+                return msg
+            }
+            return "Invalid search"
         }
+
+        console.log("searchReg");
+
+    },
+
+    loginForm: function (email, password) {
+        return new Promise(function (resolve, reject) {
+            err = [];
+
+            this.inputEmptyString(email, "Email is required");
+            this.inputEmptyString(password, "Password is required");
+            this.inputEmailReg(email);
+            this.inputPasswordReg(password);
+
+            console.log("err" + " " + err);
+
+
+            if (typeof err !== 'undefined' && err.length > 0) {
+                // the array is defined and has at least one element
+               return reject(err)
+            } else {
+                return resolve();
+            }
+
+        });
+    },
+
+    signupForm: function (name, email, password) {
+        return new Promise(function (resolve, reject) {
+
+            err = [];
+            this.inputEmptyString(email, "Email is required");
+            this.inputEmptyString(password, "Password is required");
+            this.inputEmptyString(name, "Name is required");
+            this.inputEmailReg(email);
+            this.inputPasswordReg(password);
+            this.inputNameReg(name);
+
+            console.log("err" + " " + err);
+
+            if (typeof err !== 'undefined' && err.length > 0) {
+                // the array is defined and has at least one element
+                return reject(err)
+            } else {
+                return resolve();
+            }
+
+        });
+    },
+
+    searchForm: function (searchString, category) {
+        err = [];
+
+
+
+        console.log("searchForm");
+        return new Promise(function (resolve, reject) {
+            console.log("in promise searchForm");
+            this.inputPasswordReg(searchString);
+            this.inputPasswordReg(category);
+
+
+            console.log("err" + " " + err);
+
+            if (typeof err !== 'undefined' && err.length > 0) {
+                // the array is defined and has at least one element
+                console.log("reject searchform");
+                return reject(err)
+            } else {
+                console.log("resolve searchform");
+                return resolve();
+            }
+
+        });
     }
+
 
 };

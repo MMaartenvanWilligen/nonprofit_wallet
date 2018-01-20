@@ -6,6 +6,9 @@
                     <div class="input-group-btn search-panel">
                         <% if (typeof categories !== 'undefined') { %>
                         <select name="category" class="btn btn-primary dropdown-toggle">
+
+                            <option value="" name="category">Category</option>
+
                             <% _.each(categories, function (record) { %>
                             <option value="<%= record.id_category %>" name="category"><%= record.category %></option>
                             <% }) %>

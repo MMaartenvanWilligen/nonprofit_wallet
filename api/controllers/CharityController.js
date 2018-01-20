@@ -19,13 +19,10 @@ module.exports = {
 
             var charities = records;
 
-            findService.allCategories(function (err, records) {
-                if (err) {
-                    return res.negotiate(err);
-                }
-
-                // It worked!
+            findService.allCategories().then(function (records) {
                 return res.view({categories: records, records: charities})
+            }).catch(function (err) {
+                return res.negotiate(err);
             });
 
         });
@@ -33,29 +30,42 @@ module.exports = {
     },
 
     search: function (req, res) {
+        console.log("search" + " " + req.params.all());
         console.log(req.params.all());
-        var options = req.params.all();
+        var searchString = req.param("searchString");
+        var category = req.param("category");
 
+        validationService.searchForm(searchString, category).then(function () {
+            console.log("go to search");
+            searchCharity();
+        }).catch(function (err) {
+            return res.view('charity/show', {formError: err});
+        });
 
-        findService.searchCharities(options, function (err, records) {
-            if (err) {
-                return res.negotiate(err);
-            }
-            console.log("search done");
-            console.log(records);
-            var charities = records;
+        function searchCharity () {
+            console.log("in search");
 
-            findService.allCategories(function (err, records) {
+            findService.searchCharities(req.params.all()).then(function (records) {
+
+                console.log("search done");
+                console.log(records);
+                var charities = records;
+
+                findService.allCategories().then(function (records) {
+                    return res.view("charity/show", {categories: records, records: charities});
+                }).catch(function (err) {
+                    return res.negotiate(err);
+                });
+
+            }).catch(function (err) {
                 if (err) {
                     return res.negotiate(err);
+                } else {
+                    return res.redirect("charity/show");
                 }
-
-                // It worked!
-                return res.view("charity/show", {categories: records, records: charities})
-            });
-        });
+            })
+        }
     },
-
 
     /**
      * CommentController.destroy()
@@ -65,6 +75,5 @@ module.exports = {
             todo: 'Not implemented yet!'
         });
     }
-
 
 };

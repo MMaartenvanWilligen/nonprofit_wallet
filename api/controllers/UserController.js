@@ -11,50 +11,46 @@ module.exports = {
         var email = req.param("email");
         var password = req.param("password");
 
-        validationService.loginForm(email, password, function (err) {
-            console.log(err);
-
-            if (typeof err !== 'undefined' && err.length > 0) {
-                return res.view('user/login', {formError: err});
-            }
-
-            else {
-                console.log("else");
-                User.findOneByEmail(req.param("email")).exec(function (err, user) {
-
-                    if (user === undefined || user === null) {
-                        return res.view('user/login', {formError: "Email dit not match with registered account"});
-                    }
-
-                    else if (err) {
-                        console.log("else if error");
-                        return res.negotiate(err);
-
-                    } else {
-                        console.log("user found");
-                        console.log(user);
-
-                        bcrypt.compare(req.param("password"), user.password, function (err, match) {
-                            // res = false
-                            if (err || !match) {
-
-                                console.log(err);
-                                res.view('user/login', {formError: "password did not match"});
-
-                            } else {
-                                console.log('name is:', user.name);
-                                req.session.authenticated = true;
-                                req.session.User = user;
-                                res.redirect('homepage');
-                            }
-
-                        });
-                    }
-                });
-            }
-
+        validationService.loginForm(email, password).then(function (result) {
+            login();
+        }).catch(function (err) {
+            return res.view('user/login', {formError: err});
         });
 
+        function login() {
+            console.log("else");
+            User.findOneByEmail(req.param("email")).exec(function (err, user) {
+
+                if (user === undefined || user === null) {
+                    return res.view('user/login', {formError: "Email dit not match with registered account"});
+                }
+
+                else if (err) {
+                    console.log("else if error");
+                    return res.negotiate(err);
+
+                } else {
+                    console.log("user found");
+                    console.log(user);
+
+                    bcrypt.compare(req.param("password"), user.password, function (err, match) {
+                        // res = false
+                        if (err || !match) {
+
+                            console.log(err);
+                            res.view('user/login', {formError: "password did not match"});
+
+                        } else {
+                            console.log('name is:', user.name);
+                            req.session.authenticated = true;
+                            req.session.User = user;
+                            res.redirect('homepage');
+                        }
+
+                    });
+                }
+            });
+        }
     },
 
 
@@ -64,11 +60,16 @@ module.exports = {
 
     create: function (req, res, next) {
 
+        validationService.signupForm(req.param("name"), req.param("email"), req.param("password")).then(function (result) {
+            login();
+        }).catch(function (err) {
+            return res.view('user/signup', {formError: err});
+        });
+
         User.create(req.params.all()).exec(function (err, user) {
             if (err && err.invalidAttributes) {
 
                 console.log(err.Errors);
-
                 return res.view('user/signup', {formError: err.Errors});
 
             } else {
@@ -77,8 +78,7 @@ module.exports = {
             }
         });
 
-    }
-    ,
+    },
 
     logout: function (req, res, next) {
 

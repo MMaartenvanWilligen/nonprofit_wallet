@@ -11,10 +11,11 @@ module.exports = {
         var email = req.param("email");
         var password = req.param("password");
 
-        validationService.loginForm(email, password).then(function (result) {
+        validationService.loginForm(email, password, function (err) {
+            if(err){
+                return res.view('user/login', {formError: err});
+            }
             login();
-        }).catch(function (err) {
-            return res.view('user/login', {formError: err});
         });
 
         function login() {

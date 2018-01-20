@@ -1,7 +1,7 @@
 /**
  * Created by Gebruiker on 16-1-2018.
  */
-var Promise = require("bluebird");
+
 var err = [];
 
 module.exports = {
@@ -61,7 +61,7 @@ module.exports = {
                 err.push(msg);
                 return msg
             }
-            return "Invalid name: must be only letters and no special characters"
+            return "Invalid name: must be only be letters and no special characters"
         }
 
     },
@@ -104,7 +104,6 @@ module.exports = {
 
     signupForm: function (name, email, password, done) {
 
-
         err = [];
         this.inputEmptyString(email, "Email is required");
         this.inputEmptyString(password, "Password is required");
@@ -117,9 +116,9 @@ module.exports = {
 
         if (typeof err !== 'undefined' && err.length > 0) {
             // the array is defined and has at least one element
-            return reject(err)
+            return done(err)
         } else {
-            return resolve();
+            return done();
         }
 
     },
@@ -130,19 +129,18 @@ module.exports = {
         console.log("searchForm");
 
         console.log("in promise searchForm");
-        this.inputPasswordReg(searchString);
-        this.inputPasswordReg(category);
-
+        this.inputSearchReg(searchString, "invalid search: must be letters");
+        this.inputSearchReg(category, "invalid category: must be letters");
 
         console.log("err" + " " + err);
 
         if (typeof err !== 'undefined' && err.length > 0) {
             // the array is defined and has at least one element
             console.log("reject searchform");
-            return reject(err)
+            return done(err)
         } else {
             console.log("resolve searchform");
-            return resolve();
+            return done();
         }
 
 

@@ -35,11 +35,16 @@ module.exports = {
         var searchString = req.param("searchString");
         var category = req.param("category");
 
-        validationService.searchForm(searchString, category).then(function () {
-            console.log("go to search");
-            searchCharity();
-        }).catch(function (err) {
-            return res.view('charity/show', {formError: err});
+        validationService.searchForm(searchString, category ,function (err) {
+
+            if(err){
+                console.log("err validation. res");
+                return res.redirect("charity/show");
+
+            } else{
+                console.log("go to search");
+                searchCharity();
+            }
         });
 
         function searchCharity () {

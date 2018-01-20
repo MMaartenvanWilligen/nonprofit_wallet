@@ -6,7 +6,7 @@ var err = [];
 
 module.exports = {
 
-     inputEmptyString: function (input, msg) {
+    inputEmptyString: function (input, msg) {
 
         if (input === "") {
             if (msg) {
@@ -84,75 +84,68 @@ module.exports = {
 
     },
 
-    loginForm: function (email, password) {
-        return new Promise(function (resolve, reject) {
-            err = [];
-
-            this.inputEmptyString(email, "Email is required");
-            this.inputEmptyString(password, "Password is required");
-            this.inputEmailReg(email);
-            this.inputPasswordReg(password);
-
-            console.log("err" + " " + err);
-
-
-            if (typeof err !== 'undefined' && err.length > 0) {
-                // the array is defined and has at least one element
-               return reject(err)
-            } else {
-                return resolve();
-            }
-
-        });
-    },
-
-    signupForm: function (name, email, password) {
-        return new Promise(function (resolve, reject) {
-
-            err = [];
-            this.inputEmptyString(email, "Email is required");
-            this.inputEmptyString(password, "Password is required");
-            this.inputEmptyString(name, "Name is required");
-            this.inputEmailReg(email);
-            this.inputPasswordReg(password);
-            this.inputNameReg(name);
-
-            console.log("err" + " " + err);
-
-            if (typeof err !== 'undefined' && err.length > 0) {
-                // the array is defined and has at least one element
-                return reject(err)
-            } else {
-                return resolve();
-            }
-
-        });
-    },
-
-    searchForm: function (searchString, category) {
+    loginForm: function (email, password, done) {
         err = [];
 
+        this.inputEmptyString(email, "Email is required");
+        this.inputEmptyString(password, "Password is required");
+        this.inputEmailReg(email);
+        this.inputPasswordReg(password);
 
+        console.log("err" + " " + err);
+
+        if (typeof err !== 'undefined' && err.length > 0) {
+            // the array is defined and has at least one element
+            done(err);
+        } else {
+            done();
+        }
+    },
+
+    signupForm: function (name, email, password, done) {
+
+
+        err = [];
+        this.inputEmptyString(email, "Email is required");
+        this.inputEmptyString(password, "Password is required");
+        this.inputEmptyString(name, "Name is required");
+        this.inputEmailReg(email);
+        this.inputPasswordReg(password);
+        this.inputNameReg(name);
+
+        console.log("err" + " " + err);
+
+        if (typeof err !== 'undefined' && err.length > 0) {
+            // the array is defined and has at least one element
+            return reject(err)
+        } else {
+            return resolve();
+        }
+
+    },
+
+    searchForm: function (searchString, category, done) {
+        err = [];
 
         console.log("searchForm");
-        return new Promise(function (resolve, reject) {
-            console.log("in promise searchForm");
-            this.inputPasswordReg(searchString);
-            this.inputPasswordReg(category);
+
+        console.log("in promise searchForm");
+        this.inputPasswordReg(searchString);
+        this.inputPasswordReg(category);
 
 
-            console.log("err" + " " + err);
+        console.log("err" + " " + err);
 
-            if (typeof err !== 'undefined' && err.length > 0) {
-                // the array is defined and has at least one element
-                console.log("reject searchform");
-                return reject(err)
-            } else {
-                console.log("resolve searchform");
-                return resolve();
-            }
+        if (typeof err !== 'undefined' && err.length > 0) {
+            // the array is defined and has at least one element
+            console.log("reject searchform");
+            return reject(err)
+        } else {
+            console.log("resolve searchform");
+            return resolve();
+        }
 
-        });
+
     }
 
 

@@ -2,112 +2,116 @@
  * Created by Gebruiker on 14-1-2018.
  */
 
+var Promise = require("bluebird");
+
 module.exports = {
 
-    allCategories: function (done) {
+    allCategories: function () {
 
-        Category.find().exec(function (err, records) {
-            if (err) {
-                done(err, records)
-            }
+        return new Promise(function (resolve, reject) {
 
-            if (records) {
-                done(err, records);
-            }
+            Category.find().exec(function (err, records) {
+                if (err) {
+                    reject(err)
+                }
+
+                if (records) {
+                    resolve(records)
+                }
+            });
         });
-
     },
 
-    searchCharities: function (options, done) {
+    searchCharities: function (options) {
 
         console.log("searchCharities");
-        console.log(options);
         console.log(options.category);
         console.log(options.searchString);
 
+        return new Promise(function (resolve, reject) {
 
-        if (options.category && options.searchString) {
+            if (options.category && options.searchString && options.category !== "" && options.searchString !== "") {
+                console.log("category and string");
+                Charity.find({
+                    category: options.category,
+                    or: [{
+                        or : [
+                            { name: {contains: options.searchString}},
+                            { description: {contains: options.searchString}}
+                        ]
+                    }]
+                }).exec(function (err, records) {
+                    if (err) {
+                        reject(err)
+                    }
 
-            Charity.find({
-                category: options.category,
-                or: [
-                    {name: options.searchString},
-                    {description: options.searchString}
-                ]
-            }).exec(function (err, records) {
-                if (err) {
-                    done(err, records)
-                }
+                    if (records) {
+                        resolve(records)
+                    }
+                });
 
-                if (records) {
-                    done(err, records);
-                }
-            });
+            }
+            else if (options.searchString && options.searchString !== "") {
+                console.log("searchstring");
+                console.log(options.searchString);
 
-        }
+                Charity.find({
+                    or : [
+                        { name: {contains: options.searchString}},
+                        {description: {contains: options.searchString}}
+                    ]
+                }).exec(function (err, records) {
+                    if (err) {
+                        reject(err)
+                    }
 
-        else if (options.category) {
-            Charity.find({
-                category: options.category
-            }).exec(function (err, records) {
-                if (err) {
-                    done(err, records)
-                }
+                    if (records) {
+                        resolve(records)
+                    }
+                });
+            }
 
-                if (records) {
-                    done(err, records);
-                }
-            });
-        }
+            else if (options.category && options.category !== "") {
+                console.log("category");
+                Charity.find({
+                    category: options.category
+                }).exec(function (err, records) {
+                    if (err) {
+                        reject(err)
+                    }
 
-        else {
+                    if (records) {
+                        resolve(records)
+                    }
+                });
+            }
 
-            Charity.find({
-                or: [
-                    {name: options.searchString},
-                    {description: options.searchString}
-                ]
-            }).exec(function (err, records) {
-                if (err) {
-                    done(err, records)
-                }
-
-                if (records) {
-                    done(err, records);
-                }
-            });
-        }
+            else {
+                reject("no valid search")
+            }
+        });
     },
 
-    searchCharitiesInWallet: function (options, done) {
+    searchCharitiesInWallet: function (userId) {
 
         console.log("searchCharities");
-        console.log(options);
-        console.log(options.userId);
+        console.log(userId);
 
+        return new Promise(function (resolve, reject) {
 
-        Wallet.find({user: options.UserId})
-            .populate("charities")
-            .exec(function (err, users) {
-                // handle error
+            Wallet.find({user: options.UserId})
+                .populate("charities")
+                .exec(function (err, users) {
+                    if (err) {
+                        reject(err)
+                    }
 
-                // The users object would look something like the following
-                // [{
-                //   id: 123,
-                //   firstName: 'Foo',
-                //   lastName: 'Bar',
-                //   pets: [{
-                //     id: 1,
-                //     breed: 'labrador',
-                //     type: 'dog',
-                //     name: 'fido',
-                //     user: 123
-                //   }]
-                // }]
-            });
-    },
-
-
+                    if (users) {
+                        resolve(users)
+                    }
+                });
+        });
+    }
 
 
 };

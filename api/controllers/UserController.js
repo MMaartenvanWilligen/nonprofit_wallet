@@ -45,7 +45,7 @@ module.exports = {
                             req.session.authenticated = true;
                             req.session.User = user;
                             console.log("loggedId");
-                            if(user.role === "admin"){
+                            if (user.role === "admin") {
                                 res.redirect('/admin/dashboard');
                             }
                             res.redirect('homepage');
@@ -115,6 +115,26 @@ module.exports = {
             return res.negotiate(err);
         });
 
+    },
+
+    edit: function (req, res) {
+        console.log("edit");
+        findService.searchUser(req.param("id")).then(function (records) {
+            return res.view({user: records});
+        }).catch(function (err) {
+            console.log(err);
+            return res.negotiate(err);
+        });
+    },
+
+    update: function (req, res) {
+        var user = req.params.all();
+        editService.updateUser(req.param("id"), user).then(function (records) {
+            return res.redirect("admin/dashboard")
+        }).catch(function (err) {
+            console.log(err);
+            return res.view('user/edit/' + req.param("id"), {formError: err.Errors});
+        });
     }
 
 };

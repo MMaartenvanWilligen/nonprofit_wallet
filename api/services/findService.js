@@ -22,6 +22,22 @@ module.exports = {
         });
     },
 
+    allUsers: function () {
+
+        return new Promise(function (resolve, reject) {
+
+            User.find().exec(function (err, records) {
+                if (err) {
+                    reject(err)
+                }
+
+                if (records) {
+                    resolve(records)
+                }
+            });
+        });
+    },
+
     searchCharities: function (options) {
 
         console.log("searchCharities");
@@ -110,6 +126,25 @@ module.exports = {
                     if (wallet) {
                         console.log(wallet);
                         resolve(wallet)
+                    }
+                });
+        });
+    },
+
+    searchUser: function (userId) {
+
+        return new Promise(function (resolve, reject) {
+
+            User.find(userId)
+                .exec(function (err, user) {
+                    if (err) {
+                        console.log("err");
+                        reject(err)
+                    }
+
+                    if (user) {
+                        console.log(user);
+                        resolve(user)
                     }
                 });
         });

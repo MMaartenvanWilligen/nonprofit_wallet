@@ -49,9 +49,10 @@ module.exports = {
                             req.session.User = user;
                             console.log("loggedId");
                             if (user.role === "admin") {
-                                res.redirect('/admin/dashboard');
+                                return res.redirect('admin/dashboard');
+                            } else {
+                                return res.redirect('homepage');
                             }
-                            res.redirect('homepage');
                         }
 
                     });

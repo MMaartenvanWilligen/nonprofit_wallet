@@ -78,7 +78,7 @@ module.exports = {
         console.log(req.param("id"));
 
         if (req.param("id") && req.param("id") !== null) {
-            createService.createLike(1, req.param("id")).then(function (records) {
+            createService.createLike(req.session.User.id_user, req.param("id")).then(function (records) {
                 return res.redirect("charity/show");
             }).catch(function (err) {
                 console.log(err);

@@ -35,11 +35,14 @@ module.exports.routes = {
    
     'get /': "charityController.homepage",
     'get /homepage': "charityController.homepage",
+    'get /admin': "adminController.dashboard",
+    'get /charity': "charityController.show",
     'post /user/login': "userController.loginPost",
     'post /user/signup': "userController.create",
     'get /user/logout': "userController.logout",
     'get /charity/search': 'charityController.show',
-    'post /charity/search': 'charityController.search'
+    'post /charity/search': 'charityController.search',
+    'get /admin/category': "categoryController.show"
 
 
 

@@ -40,7 +40,8 @@ module.exports.policies = {
     },
 
     charityController: {
-        homepage: true
+        homepage: true,
+        add: "minimalLikes"
     }
 
 

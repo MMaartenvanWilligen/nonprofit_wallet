@@ -135,6 +135,16 @@ module.exports = {
             console.log(err);
             return res.view('user/edit/' + req.param("id"), {formError: err.Errors});
         });
+    },
+
+    destroy: function (req, res) {
+        console.log("edit");
+        destroyService.destroyUser(req.param("id")).then(function (records) {
+            return res.redirect("admin/dashboard");
+        }).catch(function (err) {
+            console.log(err);
+            return res.negotiate(err);
+        });
     }
 
 };

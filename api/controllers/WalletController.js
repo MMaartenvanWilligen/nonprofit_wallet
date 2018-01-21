@@ -13,7 +13,7 @@ module.exports = {
         });
     },
 
-    delete: function (req, res) {
+    destroy: function (req, res) {
 
         destroyService.destroyCharityfromWallet(req.session.User.id_user, req.param("id")).then(function (records) {
             return res.redirect("user/profile");

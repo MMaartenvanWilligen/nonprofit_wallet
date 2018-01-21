@@ -6,31 +6,52 @@ var Promise = require("bluebird");
 
 module.exports = {
 
-    destroyUser: function (options) {
+    destroyUser: function (userId) {
         return new Promise(function (resolve, reject) {
 
-
-            User.destroy(userId).exec(function (err) {
+            User.find(userId).populate('likes').exec(function (err, users) {
                 if (err) {
                     return reject()
                 }
-                sails.log('Deleted user');
-                return resolve();
+                console.log(users);
+
+                removeAllLikeAssociations(function () {
+                    User.destroy(userId).exec(function (err) {
+                        if (err) {
+                            return reject()
+                        }
+                        sails.log('Deleted user');
+                        return resolve();
+                    });
+                });
+
+                function removeAllLikeAssociations(done) {
+                    console.log("removeAllLikesFunction");
+                    console.log("each likes" + " " + users[0].likes);
+                    _.each(users[0].likes, function (record) {
+                        console.log("each");
+                        users[0].likes.remove(record.id_charity);
+
+                        users[0].save(function (err) {
+                            if (err) {
+                                return reject(err)
+                            }
+
+                            sails.log('Deleted charity form wallet');
+                        });
+                    });
+                    done()
+                }
+
+
             });
+
+
         })
     },
 
-    destroyCharity: function (options) {
-        return new Promise(function (resolve, reject) {
+    destroyCharity: function (charityId) {
 
-            User.destroy(userId).exec(function (err) {
-                if (err) {
-                    return reject()
-                }
-                sails.log('Deleted user');
-                return resolve();
-            });
-        })
     },
 
     destroyCharityfromWallet: function (userId, charityId) {

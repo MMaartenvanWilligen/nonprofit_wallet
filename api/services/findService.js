@@ -166,6 +166,25 @@ module.exports = {
         });
     },
 
+    searchUserPopulateLikes: function (userId) {
+
+        return new Promise(function (resolve, reject) {
+
+            User.find(userId).populate("likes")
+                .exec(function (err, user) {
+                    if (err) {
+                        console.log("err");
+                        reject(err)
+                    }
+
+                    if (user) {
+                        console.log(user);
+                        resolve(user)
+                    }
+                });
+        });
+    },
+
     searchCharity: function (charityId) {
 
         return new Promise(function (resolve, reject) {

@@ -8,11 +8,12 @@ module.exports = function(req, res, next) {
             console.log("admin");
             return next();
         } else {
-            return res.forbidden('You are not permitted to perform this action. You need to be Admin');
+            var formError = ['You are not permitted to perform this action. You need to be logged in as admin'];
+            return res.view('user/login', {formError: formError});
         }
+    } else {
+        var formError = ['You are not permitted to perform this action. You need to be logged in as admin'];
+        return res.view('user/login', {formError: formError});
     }
 
-    // User is not allowed
-    // (default res.forbidden() behavior can be overridden in `config/403.js`)
-    return res.forbidden('You are not permitted to perform this action. you need to be logged in');
 };

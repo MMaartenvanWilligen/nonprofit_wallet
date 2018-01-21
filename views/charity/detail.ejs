@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="row col-12">
+
+        <div class="col-4">
+            <div class="row col-12 justify-content-center">
+
+                <div class="card col-12">
+
+                    <!--Card image-->
+                    <!--Card image-->
+                    <div class="view gradient-scooter card-gradient-top">
+                        <div class="mask flex-center">
+                            <h1 class="white-text">Charity</h1>
+                        </div>
+                    </div>
+
+                    <!--Card content-->
+                    <div class="card-body">
+                        <% if (typeof records !== 'undefined') { %>
+                        <% _.each(records, function (record) { %>
+                        <% if (typeof record !== 'undefined') { %>
+                        <!--Text-->
+                        <ul class="list-group">
+                            <li class="list-group-item">Name: <%= record.name %></li>
+                            <li class="list-group-item">Description: <%= record.description %></li>
+                            <li class="list-group-item">Category: <%= category %></li>
+                        </ul>
+                        <% } %>
+                        <% }) %>
+                        <% } %>
+                    </div>
+
+                </div>
+                <!--/.Card-->
+
+            </div>
+        </div>
+
+        <div class="col-8">
+            <%- partial('../like/like.ejs') %>
+        </div>
+
+    </div>
+
+</div>
+
+

@@ -1,0 +1,36 @@
+<div class="col-12">
+
+    <% if (typeof wallet !== 'undefined' && wallet.length > 0) { %>
+    <% _.each(wallet, function (record) { %>
+    <table class="table">
+        <thead>
+        <h1><%= record.name %></h1>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(record.charities, function (charity) { %>
+        <tr>
+
+            <td><%= charity.name %></td>
+            <td><%= charity.description %></td>
+            <td><a href="/wallet/destroy/<%= charity.id_charity %>"><i
+                            class="fa fa-window-close fa-lg danger-color-dark"></i></a></td>
+
+        </tr>
+        <% }) %>
+
+        </tbody>
+    </table>
+    <% }) %>
+
+</div>
+<div class="row col-12 justify-content-center">
+    <% } else { %>
+    <h1>No wallet</h1>
+    <a href="/charity/show">Add charity to your wallet</a>
+    <% } %>
+</div>

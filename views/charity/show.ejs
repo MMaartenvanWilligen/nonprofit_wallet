@@ -1,0 +1,28 @@
+<div class="container">
+    <!-- Content here -->
+    <%- partial('search.ejs') %>
+
+
+    <div class="row col-12 justify-content-center">
+
+        <% if (typeof records !== 'undefined') { %>
+        <% _.each(records, function (record) { var likesCount = record.likes.length
+        %>
+        <div class="card card-body col-lg-5 col-sm-12 charity-records">
+            <h4 class="card-title"><%= record.name %></h4>
+            <p class="card-text"><%= record.description %></p>
+            <div class="flex-row">
+                <a class="card-link" href="/charity/detail/<%= record.id_charity %>">Detail</a>
+                <a class="card-link" href="/charity/add/<%= record.id_charity %>">Add</a>
+                <a class="card-link" href="/charity/like/<%= record.id_charity %>">Like</a>
+                <span
+                        class="badge badge-primary badge-pill mx-2 align-middle badge-nonProfit"><i
+                            class="fas fa-heart"> </i> <%= likesCount %>  </span>
+            </div>
+        </div>
+
+        <% }) %>
+        <% } %>
+
+    </div>
+</div>

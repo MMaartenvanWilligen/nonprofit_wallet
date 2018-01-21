@@ -1,0 +1,64 @@
+/* Your custom styles */
+
+#home-image {
+    background: url("https://mdbootstrap.com/img/Photos/Others/img (50).jpg")no-repeat center center !important;
+    background-size: cover;
+    height: 500px;
+}
+
+.gradient-mild{
+    background: #67B26F;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #4ca2cd, #67B26F);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #4ca2cd, #67B26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.gradient-telegram{
+    background: #1c92d2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #f2fcfe, #1c92d2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #f2fcfe, #1c92d2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.gradient-scooter {
+    background: #36D1DC;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #5B86E5, #36D1DC);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #5B86E5, #36D1DC); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.card-gradient-top {
+    height: 150px;
+    width: auto;
+}
+
+.nav-link{
+    color: white;
+}
+
+.container {
+    margin-top: 75px;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    /* bring your own prefixes */
+    transform: translate(-50%, -50%);
+}
+
+#signup-card {
+    padding: 0px!important;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#form-login, #form-signup{
+
+    margin-top: 20px;
+}
+
+.charity-records{
+    margin: 10px;
+}

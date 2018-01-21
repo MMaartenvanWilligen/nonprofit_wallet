@@ -1,0 +1,38 @@
+<!-- Content here -->
+
+<!--Card-->
+
+<% if (typeof req.session.User !== 'undefined') { %>
+<!--Card-->
+<div class="card col-12">
+
+    <!--Card image-->
+    <!--Card image-->
+    <div class="view gradient-scooter card-gradient-top">
+        <div class="mask flex-center">
+            <h1 class="white-text">Profiel</h1>
+        </div>
+    </div>
+
+    <!--Card content-->
+    <div class="card-body">
+
+        <!--Text-->
+        <ul class="list-group">
+            <li class="list-group-item"><i class="fas fa-envelope fa-lg"></i><%= req.session.User.name %></li>
+            <li class="list-group-item"><i class="fas fa-user fa-lg"></i><%= req.session.User.email %></li>
+            <li class="list-group-item"><i class="fas fa-check-circle fa-lg"></i><%= req.session.User.role %></li>
+        </ul>
+    </div>
+
+</div>
+<!--/.Card-->
+
+<% } %>
+
+
+
+
+
+
+

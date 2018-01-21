@@ -1,0 +1,34 @@
+/**
+* Created by Gebruiker on 21-1-2018.
+*/
+<div class="col-12">
+
+    <% if (typeof records !== 'undefined' && records.length > 0) { %>
+
+    <table class="table">
+        <thead>
+        <h1><%= record.name %></h1>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% _.each(records, function (charity) { %>
+        <tr>
+
+            <td><%= charity.name %></td>
+            <td><%= charity.description %></td>
+            <td><a href="/wallet/delete/<%= charity.id_charity %>"><i
+                            class="fa fa-window-close fa-lg danger-color-dark"></i></a></td>
+        </tr>
+        <% }) %>
+
+        </tbody>
+    </table>
+    <% } %>
+
+
+</div>

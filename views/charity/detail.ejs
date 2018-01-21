@@ -1,0 +1,32 @@
+<div class="container">
+
+    <div class="row col-12 justify-content-center">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (typeof records !== 'undefined') { %>
+            <tr>
+                <% _.each(records, function (record) { %>
+                <th scope="row">1</th>
+                <td><%= record.name %></td>
+                <td><%= record.description %></td>
+                <td><a href="/charity/edit/<%= record.id_charity %>">edit</a><a href="/charity/delete/<%= record.id_charity %>">delete</a></td>
+                <% }) %>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<%- partial('../like/like.ejs') %>

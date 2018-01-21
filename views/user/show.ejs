@@ -1,0 +1,31 @@
+<div class="container">
+
+    <div class="row col-12 justify-content-center">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (typeof records !== 'undefined') { %>
+            <tr>
+                <% _.each(records, function (record) { %>
+                <th scope="row">1</th>
+                <td><%= record.name %></td>
+                <td><%= record.email %></td>
+                <td><%= record.role %></td>
+                <td><a href="/user/edit/<%= record.id_user %>">edit</a><a href="/user/delete/<%= record.id_user %>">delete</a></td>
+                <% }) %>
+            </tr>
+            <% } %>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

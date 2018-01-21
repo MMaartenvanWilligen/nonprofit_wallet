@@ -35,9 +35,9 @@ module.exports = {
                 Charity.find({
                     category: options.category,
                     or: [{
-                        or : [
-                            { name: {contains: options.searchString}},
-                            { description: {contains: options.searchString}}
+                        or: [
+                            {name: {contains: options.searchString}},
+                            {description: {contains: options.searchString}}
                         ]
                     }]
                 }).populate('likes').exec(function (err, records) {
@@ -56,8 +56,8 @@ module.exports = {
                 console.log(options.searchString);
 
                 Charity.find({
-                    or : [
-                        { name: {contains: options.searchString}},
+                    or: [
+                        {name: {contains: options.searchString}},
                         {description: {contains: options.searchString}}
                     ]
                 }).populate("likes").exec(function (err, records) {
@@ -94,26 +94,25 @@ module.exports = {
 
     searchCharitiesInWallet: function (userId) {
 
-        console.log("searchCharities");
+        console.log("search charities in wallet");
         console.log(userId);
 
         return new Promise(function (resolve, reject) {
 
-            Wallet.find({user: options.UserId})
+            Wallet.find({user: userId})
                 .populate("charities")
-                .exec(function (err, users) {
+                .exec(function (err, wallet) {
                     if (err) {
+                        console.log("err");
                         reject(err)
                     }
 
-                    if (users) {
-                        resolve(users)
+                    if (wallet) {
+                        console.log(wallet);
+                        resolve(wallet)
                     }
                 });
         });
     }
-
-
-
 
 };

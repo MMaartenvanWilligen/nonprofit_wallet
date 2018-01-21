@@ -30,13 +30,13 @@ module.exports = {
 
         public: {
             type: "boolean",
-            required: true,
+            defaultsTo: true,
             columnName: 'public'
         },
 
         // wallet may have one user
-        user:{
-            model:'user',
+        user: {
+            model: 'user',
             unique: true
         },
 
@@ -57,7 +57,6 @@ module.exports = {
         },
 
         public: {
-            required: 'public is required',
             type: "must be a boolean"
         }
 

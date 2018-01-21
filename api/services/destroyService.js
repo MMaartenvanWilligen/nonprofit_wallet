@@ -31,5 +31,31 @@ module.exports = {
                 return resolve();
             });
         })
+    },
+
+    destroyCharityfromWallet: function (userId, charityId) {
+        return new Promise(function (resolve, reject) {
+
+
+            Wallet.findOne({user: userId}).exec(function (err, wallet) {
+                if (err) {
+                    return reject(err)
+                }
+
+                // Queue up a join table record to remove
+                wallet.charities.remove(charityId);
+
+                // Save the user, creating the new pet and syncing the associations in the join table
+                wallet.save(function (err) {
+                    if (err) {
+                        return reject(err)
+                    }
+
+                    sails.log('Deleted charity form wallet');
+                    return resolve();
+                });
+            });
+        })
     }
+
 };

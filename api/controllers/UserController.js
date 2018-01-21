@@ -12,7 +12,7 @@ module.exports = {
         var password = req.param("password");
 
         validationService.loginForm(email, password, function (err) {
-            if(err){
+            if (err) {
                 return res.view('user/login', {formError: err});
             }
             login();
@@ -37,7 +37,6 @@ module.exports = {
                     bcrypt.compare(req.param("password"), user.password, function (err, match) {
                         // res = false
                         if (err || !match) {
-
                             console.log(err);
                             res.view('user/login', {formError: "password did not match"});
 
@@ -45,6 +44,10 @@ module.exports = {
                             console.log('name is:', user.name);
                             req.session.authenticated = true;
                             req.session.User = user;
+                            console.log("loggedId");
+                            if(user.role === "admin"){
+                                res.redirect('/admin/dashboard');
+                            }
                             res.redirect('homepage');
                         }
 
@@ -101,7 +104,17 @@ module.exports = {
         // Otherwise if this is an HTML-wanting browser, do a redirect.
         return res.redirect('user/login');
 
-    }
+    },
 
+    profile: function (req, res, next) {
+        console.log("profile");
+        findService.searchCharitiesInWallet(req.session.User.id_user).then(function (records) {
+            return res.view({wallet: records});
+        }).catch(function (err) {
+            console.log(err);
+            return res.negotiate(err);
+        });
+
+    }
 
 };

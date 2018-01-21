@@ -38,7 +38,15 @@ module.exports = {
         role: {
             type: "string",
             size: 40,
+            defaultsTo : "user",
             columnName: 'role'
+        },
+
+        //active
+        active: {
+            type: "boolean",
+            defaultsTo : true,
+            columnName: 'active'
         },
 
         // user may have one wallet

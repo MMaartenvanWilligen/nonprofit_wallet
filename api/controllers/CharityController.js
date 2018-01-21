@@ -92,12 +92,14 @@ module.exports = {
         console.log(req.param("id"));
 
         if(req.param("id") && req.param("id") !== null) {
-            createService.addCharityToWallet(1, req.param("id")).then(function (records) {
+            createService.addCharityToWallet(req.session.User.id_user, req.param("id")).then(function (records) {
                 return res.redirect("charity/show");
             }).catch(function (err) {
                 console.log(err);
                 return res.negotiate(err);
             });
+        } else {
+            console.log("id not there")
         }
     },
 

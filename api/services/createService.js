@@ -10,27 +10,32 @@ module.exports = {
         return new Promise(function (resolve, reject) {
 
             if (!wallet) {
-               var wallet = {name: "My first wallet", public: true};
+                var wallet = {name: "My first wallet", public: true, user: userId};
             }
             //check if there is a wallet associated with the user. Else create a wallet with the wallet object in options
             Wallet.findOrCreate({user: userId}, wallet).exec(function createFindCB(err, wallet) {
+                console.log("wallet find or create result" + " " + wallet.id_wallet);
                 //When wallet is created or found populate it with the charity
                 if (err) {
                     return reject(err);
-                } else {
+                }
+                else {
                     Wallet.findOne(wallet.id_wallet).exec(function (err, wallet) {
                         if (err) {
                             return reject(err);
                         }
-
+                        console.log("wallet findone" + " " + wallet);
                         // Queue up a new charity to be added and a record to be created in the join table
                         wallet.charities.add(charityId);
+
+                        // Queue up a new user to be added and a record to be created in the join table
+                        //wallet.user.add(userId);
 
                         // Save the wallet, creating the new charity and associations in the join table
                         wallet.save(function (err) {
                             if (err) {
                                 return reject(err);
-                            }else{
+                            } else {
                                 resolve()
                             }
                         });

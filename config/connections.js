@@ -40,13 +40,12 @@ module.exports.connections = {
      * Run: npm install sails-mysql                                             *
      *                                                                          *
      ***************************************************************************/
-    localServerSql: {
+  /*  localMysql: {
         adapter: 'sails-mysql',
+        user: 'root',
         host: 'localhost',
-        user: "root",
-        password: '',
-        database: 'nonprofit_wallet'
-    }
+        database: 'someDbase'
+    },*/
 
     /***************************************************************************
      *                                                                          *

@@ -84,6 +84,24 @@ module.exports = {
 
     },
 
+    inputCategoryReg: function (input, msg) {
+
+        // only letters
+        var searchRe = /^[0-9]{1,3}$/;
+        var searchName = searchRe.test(input);
+
+        if (!searchName) {
+            if (msg) {
+                err.push(msg);
+                return msg
+            }
+            return "Invalid search"
+        }
+
+        console.log("searchReg");
+
+    },
+
     loginForm: function (email, password, done) {
         err = [];
 
@@ -129,8 +147,22 @@ module.exports = {
         console.log("searchForm");
 
         console.log("in promise searchForm");
-        this.inputSearchReg(searchString, "invalid search: must be letters");
-        this.inputSearchReg(category, "invalid category: must be letters");
+        if (searchString === "" && category === "") {
+            console.log("if");
+            return done();
+
+        } else if (searchString !== "" && category === "") {
+            console.log("else if");
+            this.inputSearchReg(searchString, "invalid search: must be letters");
+
+        } else if (searchString === "" && category !== "") {
+            this.inputCategoryReg(category, "invalid category: must be one number");
+        }
+        else {
+            console.log("else");
+            this.inputSearchReg(searchString, "invalid search: must be letters");
+            this.inputCategoryReg(category, "invalid category: must be one number");
+        }
 
         console.log("err" + " " + err);
 

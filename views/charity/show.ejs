@@ -3,12 +3,11 @@
     <%- partial('search.ejs') %>
 
 
-
-
     <div class="row col-12 justify-content-center">
 
         <% if (typeof records !== 'undefined') { %>
-        <% _.each(records, function (record) { var likesCount = record.likes.length %>
+        <% _.each(records, function (record) { var likesCount = record.likes.length
+        %>
         <div class="card card-body col-lg-5 col-sm-12 charity-records">
             <h4 class="card-title"><%= record.name %></h4>
             <p class="card-text"><%= record.description %></p>
@@ -21,8 +20,9 @@
                             class="fas fa-heart"> </i> <%= likesCount %>  </span>
             </div>
         </div>
+
         <% }) %>
         <% } %>
-    </div>
 
+    </div>
 </div>

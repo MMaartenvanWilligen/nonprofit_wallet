@@ -22,7 +22,7 @@ module.exports = {
         },
 
         //a category may have multiple Charity's
-        charitys:{
+        charities:{
             collection:'charity',
             via:'category'
         }

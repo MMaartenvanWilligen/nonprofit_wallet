@@ -43,15 +43,10 @@ module.exports = {
                     done()
                 }
 
-
             });
 
 
         })
-    },
-
-    destroyCharity: function (charityId) {
-
     },
 
     destroyCharityfromWallet: function (userId, charityId) {

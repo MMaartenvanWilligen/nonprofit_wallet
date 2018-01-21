@@ -23,7 +23,9 @@ module.exports = {
             User.findOneByEmail(req.param("email")).exec(function (err, user) {
 
                 if (user === undefined || user === null) {
-                    return res.view('user/login', {formError: "Email dit not match with registered account"});
+
+                    var formError = ["Email dit not match with registered account"];
+                    return res.view('user/login', {formError: formError});
                 }
 
                 else if (err) {
@@ -38,7 +40,8 @@ module.exports = {
                         // res = false
                         if (err || !match) {
                             console.log(err);
-                            res.view('user/login', {formError: "password did not match"});
+                            var formError = ["password did not match"];
+                            res.view('user/login', {formError: formError});
 
                         } else {
                             console.log('name is:', user.name);
@@ -146,5 +149,7 @@ module.exports = {
             return res.negotiate(err);
         });
     }
+
+
 
 };

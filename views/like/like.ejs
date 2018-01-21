@@ -1,21 +1,31 @@
 <div class="container">
 
     <div class="row col-12 justify-content-center">
-        <h3>likes</h3>
+        <h3>These users liked the charity</h3>
         <table class="table">
             <thead>
             <tr>
-                <th>user</th>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
             </tr>
             </thead>
             <tbody>
-            <% if (typeof records !== 'undefined') { %>
+            <% if (typeof records !== 'undefined' && records.length > 0) { %>
             <tr>
                 <% _.each(records, function (record) { %>
-                <th scope="row">1</th>
-                <td><%= record.name %></td>
+                <% _.each(record.likes, function (user) { %>
+                <% if (typeof user !== 'undefined') { %>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td><%= user.role %></td>
+
+                <% } %>
                 <% }) %>
+                <% }) %>
+
             </tr>
+
             <% } %>
             </tbody>
         </table>

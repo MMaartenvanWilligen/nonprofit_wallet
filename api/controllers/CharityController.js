@@ -77,7 +77,7 @@ module.exports = {
         console.log(req.params.all());
         console.log(req.param("id"));
 
-        if(req.param("id") && req.param("id") !== null) {
+        if (req.param("id") && req.param("id") !== null) {
             createService.createLike(1, req.param("id")).then(function (records) {
                 return res.redirect("charity/show");
             }).catch(function (err) {
@@ -91,7 +91,7 @@ module.exports = {
         console.log(req.params.all());
         console.log(req.param("id"));
 
-        if(req.param("id") && req.param("id") !== null) {
+        if (req.param("id") && req.param("id") !== null) {
             createService.addCharityToWallet(req.session.User.id_user, req.param("id")).then(function (records) {
                 return res.redirect("charity/show");
             }).catch(function (err) {
@@ -104,12 +104,41 @@ module.exports = {
     },
 
     /**
-     * CommentController.destroy()
+     *
      */
-    destroy: function (req, res) {
-        return res.json({
-            todo: 'Not implemented yet!'
+    detail: function (req, res) {
+        console.log("detail");
+        findService.searchCharityPopulateLikes(req.param("id")).then(function (records) {
+            var charity = records;
+            console.log(charity[0].category);
+            findService.searchCategory(charity[0].category).then(function (record) {
+                console.log(record);
+                console.log(record.category);
+                return res.view({records: charity, category: record[0].category});
+
+            }).catch(function (err) {
+                console.log(err);
+                return res.negotiate(err);
+            });
+
+
+        }).catch(function (err) {
+            console.log(err);
+            return res.negotiate(err);
         });
+
+    },
+
+    homepage: function (req, res) {
+
+        Charity.find({limit: 2}).populate("likes").exec(function (err, records) {
+            if (err) {
+                return res.negotiate(err);
+            } else {
+                return res.view("homepage",{records: records})
+            }
+        });
+
     }
 
 };

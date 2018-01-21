@@ -22,6 +22,22 @@ module.exports = {
         });
     },
 
+    searchCategory: function (categoryId) {
+
+        return new Promise(function (resolve, reject) {
+
+            Category.find(categoryId).exec(function (err, records) {
+                if (err) {
+                    reject(err)
+                }
+
+                if (records) {
+                    resolve(records)
+                }
+            });
+        });
+    },
+
     allUsers: function () {
 
         return new Promise(function (resolve, reject) {
@@ -145,6 +161,44 @@ module.exports = {
                     if (user) {
                         console.log(user);
                         resolve(user)
+                    }
+                });
+        });
+    },
+
+    searchCharity: function (charityId) {
+
+        return new Promise(function (resolve, reject) {
+
+            Charity.find(charityId)
+                .exec(function (err, charity) {
+                    if (err) {
+                        console.log("err");
+                        reject(err)
+                    }
+
+                    if (charity) {
+                        console.log(charity);
+                        resolve(charity)
+                    }
+                });
+        });
+    },
+
+    searchCharityPopulateLikes: function (charityId) {
+
+        return new Promise(function (resolve, reject) {
+
+            Charity.find(charityId).populate("likes")
+                .exec(function (err, charity) {
+                    if (err) {
+                        console.log("err");
+                        reject(err)
+                    }
+
+                    if (charity) {
+                        console.log(charity);
+                        resolve(charity)
                     }
                 });
         });
